@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0B1220" />
+  <meta name="description" content="Push-Up Game — track your push-ups, level up, build streaks and push your limits every day." />
+  <title>Push-Up Game — Push Your Limits</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+
+  <!-- Fonts: Sora for display, Inter for body -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Sora:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="navbar">
+    <div class="container nav-inner">
+      <a href="#top" class="brand" aria-label="Push-Up Game home">
+        <img src="assets/logo.png" alt="Push-Up Game logo" class="brand-logo" width="44" height="44" />
+        <span class="brand-name">PUSH<span class="brand-accent">UP</span></span>
+      </a>
+      <nav class="nav-links" aria-label="Primary">
+        <a href="#game">Game</a>
+        <a href="#stats">Stats</a>
+        <a href="#game" class="btn btn-ghost btn-sm">Play</a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- ===================== HERO ===================== -->
+    <section class="hero">
+      <div class="hero-glow" aria-hidden="true"></div>
+      <div class="container hero-inner">
+        <div class="hero-copy">
+          <span class="eyebrow">Fitness · Discipline · Progress</span>
+          <h1 class="hero-title">PUSH YOUR<br /><span class="accent">LIMITS</span></h1>
+          <p class="hero-text">
+            Every rep counts. Track your push-ups in real time, climb through levels,
+            protect your daily streak and turn effort into unstoppable momentum.
+          </p>
+          <div class="hero-actions">
+            <a href="#game" class="btn btn-primary btn-lg">
+              <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+              Start Pushing
+            </a>
+            <a href="#stats" class="btn btn-ghost btn-lg">View Stats</a>
+          </div>
+          <div class="hero-badges">
+            <div class="hero-badge"><strong id="heroTotal">0</strong><span>Total reps</span></div>
+            <div class="hero-badge"><strong id="heroStreak">0</strong><span>Day streak</span></div>
+            <div class="hero-badge"><strong id="heroBest">0</strong><span>Best day</span></div>
+          </div>
+        </div>
+        <div class="hero-art">
+          <img src="assets/characters.png" alt="A man and a woman doing push-ups" />
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== GAME ===================== -->
+    <section id="game" class="section">
+      <div class="container">
+        <div class="section-head">
+          <h2>The Arena</h2>
+          <p>Tap the big button or hit <kbd>Space</kbd> for every push-up you complete.</p>
+        </div>
+
+        <div class="game-grid">
+          <!-- Counter card -->
+          <div class="card counter-card">
+            <div class="counter-top">
+              <div class="level-pill">
+                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M12 2l2.4 5.6L20 8.2l-4 3.9.9 5.9L12 15.9 7.1 18l.9-5.9-4-3.9 5.6-.6z"/></svg>
+                Level <span id="levelValue">1</span>
+              </div>
+              <div class="timer" aria-label="Elapsed time">
+                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M12 22a9 9 0 100-18 9 9 0 000 18zm0-16a7 7 0 110 14 7 7 0 010-14zm1 3h-2v5l4 2 .8-1.6L13 12z"/></svg>
+                <span id="timerValue">00:00</span>
+              </div>
+            </div>
+
+            <div class="count-display">
+              <span id="countValue">0</span>
+              <span class="count-label">push-ups</span>
+            </div>
+
+            <!-- Progress to next level -->
+            <div class="progress-wrap">
+              <div class="progress-labels">
+                <span>Level <span id="progressLevel">1</span></span>
+                <span><span id="progressCurrent">0</span> / 20 to next</span>
+              </div>
+              <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="20" aria-valuenow="0" id="progressBarAria">
+                <div class="progress-fill" id="progressFill"></div>
+              </div>
+            </div>
+
+            <!-- The big rep button -->
+            <button id="pushBtn" class="push-button" aria-label="Add one push-up">
+              <span class="push-button-inner">
+                <span class="push-plus">+1</span>
+                <span class="push-hint">TAP or SPACE</span>
+              </span>
+            </button>
+
+            <!-- Controls -->
+            <div class="controls">
+              <button id="startBtn" class="btn btn-primary">
+                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M8 5v14l11-7z"/></svg>
+                Start
+              </button>
+              <button id="pauseBtn" class="btn btn-ghost" disabled>
+                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M6 5h4v14H6zM14 5h4v14h-4z"/></svg>
+                Pause
+              </button>
+              <button id="resetBtn" class="btn btn-ghost">
+                <svg viewBox="0 0 24 24" class="icon" aria-hidden="true"><path d="M12 5V2L7 7l5 5V8a5 5 0 11-5 5H5a7 7 0 107-8z"/></svg>
+                Reset
+              </button>
+              <button id="soundBtn" class="btn btn-ghost btn-icon" aria-pressed="true" aria-label="Toggle sound">
+                <svg viewBox="0 0 24 24" class="icon" id="soundOnIcon" aria-hidden="true"><path d="M3 10v4h4l5 5V5L7 10H3zm13.5 2a4.5 4.5 0 00-2.5-4v8a4.5 4.5 0 002.5-4zM14 3.2v2.1a7 7 0 010 13.4v2.1a9 9 0 000-17.6z"/></svg>
+                <svg viewBox="0 0 24 24" class="icon" id="soundOffIcon" aria-hidden="true" style="display:none"><path d="M3 10v4h4l5 5V5L7 10H3zm18.3-1.3l-1.4-1.4L17 10.2 14.1 7.3l-1.4 1.4L15.6 11.6l-2.9 2.9 1.4 1.4L17 13l2.9 2.9 1.4-1.4L18.4 11.6z"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Records card -->
+          <div class="card records-card">
+            <h3 class="card-title">Records</h3>
+            <div class="record">
+              <div class="record-icon fire" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="icon"><path d="M12 2s5 4 5 9a5 5 0 01-10 0c0-1.5.6-2.7 1.3-3.6C8 9 8 10.5 9 11c0-2 1.2-4.5 3-9zm-1 15.5c0 1 .8 1.8 1.8 1.8S14.6 18.5 14.6 17c0-1-.7-1.7-1.6-2.8-.4 1.1-2 1.6-2 3.3z"/></svg>
+              </div>
+              <div class="record-body">
+                <span class="record-label">Today's best session</span>
+                <span class="record-value" id="todayRecord">0</span>
+              </div>
+            </div>
+            <div class="record">
+              <div class="record-icon trophy" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="icon"><path d="M18 4V2H6v2H2v3a4 4 0 004 4c.5 1.6 1.9 2.8 3.6 3.1V17H7v2h10v-2h-2.6v-2.9A5 5 0 0018 11a4 4 0 004-4V4h-4zM6 9a2 2 0 01-2-2V6h2v3zm14-2a2 2 0 01-2 2V6h2v1z"/></svg>
+              </div>
+              <div class="record-body">
+                <span class="record-label">All-time best session</span>
+                <span class="record-value" id="allTimeRecord">0</span>
+              </div>
+            </div>
+            <div class="record">
+              <div class="record-icon streak" aria-hidden="true">
+                <svg viewBox="0 0 24 24" class="icon"><path d="M13 2L4.5 12.5H11l-1 9.5 8.5-11.5H12z"/></svg>
+              </div>
+              <div class="record-body">
+                <span class="record-label">Current streak</span>
+                <span class="record-value" id="streakRecord">0 <small>days</small></span>
+              </div>
+            </div>
+            <p class="records-note">All progress is saved automatically on this device.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ===================== STATS ===================== -->
+    <section id="stats" class="section section-alt">
+      <div class="container">
+        <div class="section-head">
+          <h2>Your Stats</h2>
+          <p>The proof of the work you put in.</p>
+        </div>
+        <div class="stats-grid">
+          <div class="card stat">
+            <div class="stat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M4 13h4v7H4zm6-6h4v13h-4zm6 3h4v10h-4z"/></svg>
+            </div>
+            <span class="stat-value" id="statToday">0</span>
+            <span class="stat-label">Push-ups today</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>
+            </div>
+            <span class="stat-value" id="statTotal">0</span>
+            <span class="stat-label">Total push-ups</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M18 4V2H6v2H2v3a4 4 0 004 4c.5 1.6 1.9 2.8 3.6 3.1V17H7v2h10v-2h-2.6v-2.9A5 5 0 0018 11a4 4 0 004-4V4h-4z"/></svg>
+            </div>
+            <span class="stat-value" id="statBestDay">0</span>
+            <span class="stat-label">Best day ever</span>
+          </div>
+          <div class="card stat">
+            <div class="stat-icon" aria-hidden="true">
+              <svg viewBox="0 0 24 24" class="icon"><path d="M12 2s5 4 5 9a5 5 0 01-10 0c0-1.5.6-2.7 1.3-3.6C8 9 8 10.5 9 11c0-2 1.2-4.5 3-9z"/></svg>
+            </div>
+            <span class="stat-value" id="statStreak">0</span>
+            <span class="stat-label">Current streak (days)</span>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div class="brand">
+        <img src="assets/logo.png" alt="" class="brand-logo" width="36" height="36" />
+        <span class="brand-name">PUSH<span class="brand-accent">UP</span></span>
+      </div>
+      <p>Built for people who don't skip a day. Push your limits.</p>
+      <small>&copy; <span id="year"></span> Push-Up Game. All reps reserved.</small>
+    </div>
+  </footer>
+
+  <!-- Level Up overlay -->
+  <div id="levelUp" class="levelup" aria-live="assertive" role="status">
+    <div class="levelup-badge">
+      <span class="levelup-title">LEVEL UP</span>
+      <span class="levelup-num" id="levelUpNum">2</span>
+      <span class="levelup-sub">Keep pushing!</span>
+    </div>
+  </div>
+
+  <!-- Confetti canvas -->
+  <canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+
+  <script src="script.js" defer></script>
+</body>
+</html>
